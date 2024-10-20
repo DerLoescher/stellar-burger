@@ -1,0 +1,30 @@
+.constructor-block {
+  display: flex;
+  flex-direction: column;
+
+  padding: 100px 16px 52px 16px;
+}
+
+.constructor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  overflow-y: scroll;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 40px;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+}
