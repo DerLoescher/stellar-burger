@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 
@@ -6,30 +6,71 @@ import {
   Button,
   ConstructorElement,
   CurrencyIcon,
+  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import OrderDetails from "./order-modal/order-details";
 
 const BurgerConstructor = (props) => {
-  const totalPrice = useMemo(() => {
-    return props.items.reduce((result, item) => {
-      return (result += item.price);
-    }, 0);
+  const [orderNumber, setOrderNumber] = useState(null);
+
+  const currentBun = useMemo(() => {
+    return props.items.find((item) => item.type === "bun");
   }, [props.items]);
+  const chosenIngredients = useMemo(() => {
+    return props.items.filter((item) => item.type !== "bun");
+  }, [props.items]);
+
+  const totalPrice = useMemo(() => {
+    return (
+      chosenIngredients.reduce((result, item) => {
+        return (result += item.price);
+      }, 0) +
+      (currentBun?.price ?? 0) * 2
+    );
+  }, [currentBun?.price, chosenIngredients]);
+
+  const placeOrder = () => {
+    setOrderNumber("034536");
+  };
 
   return (
     <div className={`${styles["constructor-block"]}`}>
-      <div className={styles["constructor-list"]}>
-        {props.items.map((element, index) => (
+      {props.items.length > 0 && (
+        <>
           <ConstructorElement
-            key={element._id}
             className="mb-4"
-            type={element.type === "bun" && (index === 0 ? "top" : "bottom")}
-            isLocked={element.type === "bun"}
-            text={element.name}
-            price={element.price}
-            thumbnail={element.image}
+            type="top"
+            isLocked={true}
+            text={`${currentBun.name} (верх)`}
+            price={currentBun.price}
+            thumbnail={currentBun.image}
           />
-        ))}
-      </div>
+
+          <div className={styles["constructor-list"]}>
+            {chosenIngredients.map((element) => (
+              <div className={styles["constructor-item"]} key={element._id}>
+                <DragIcon type="primary" />
+
+                <ConstructorElement
+                  className="mb-4"
+                  text={element.name}
+                  price={element.price}
+                  thumbnail={element.image}
+                />
+              </div>
+            ))}
+          </div>
+
+          <ConstructorElement
+            className="mb-4"
+            type="bottom"
+            isLocked={true}
+            text={`${currentBun.name} (низ)`}
+            price={currentBun.price}
+            thumbnail={currentBun.image}
+          />
+        </>
+      )}
 
       <div className={`${styles.footer} mt-10`}>
         <div className={styles.total}>
@@ -38,16 +79,42 @@ const BurgerConstructor = (props) => {
           <CurrencyIcon type="primary" />
         </div>
 
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={placeOrder}>
           Оформить заказ
         </Button>
       </div>
+
+      {orderNumber && (
+        <OrderDetails
+          orderNumber={orderNumber}
+          onClose={() => setOrderNumber(null)}
+        />
+      )}
     </div>
   );
 };
 
 BurgerConstructor.propTypes = {
-  items: PropTypes.array,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      calories: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      image_mobile: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+      __v: PropTypes.number.isRequired,
+      _id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default BurgerConstructor;

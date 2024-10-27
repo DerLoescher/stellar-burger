@@ -7,7 +7,7 @@ import {
 
 const BurgerIngredientItem = (props) => {
   return (
-    <div className={styles.ingredient}>
+    <div className={styles.ingredient} onClick={props.onClick}>
       <img src={props.image} alt={props.name} />
 
       <div className={styles.price}>
@@ -26,10 +26,11 @@ const BurgerIngredientItem = (props) => {
 };
 
 BurgerIngredientItem.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.price,
-  image: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
   count: PropTypes.number,
+  onClick: PropTypes.func,
 };
 
 export default BurgerIngredientItem;

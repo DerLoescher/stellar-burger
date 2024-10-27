@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./page-layout.module.css";
 
 const PageLayout = (props) => {
-  return <div className={styles.layout}>{props.children}</div>;
+  return <main className={styles.layout}>{props.children}</main>;
 };
 
 PageLayout.propTypes = {
