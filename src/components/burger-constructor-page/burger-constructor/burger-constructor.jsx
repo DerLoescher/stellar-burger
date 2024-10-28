@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import { ingredientPropTypes } from "../../../utils/types";
 import styles from "./burger-constructor.module.css";
 
 import {
@@ -9,6 +10,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetails from "./order-modal/order-details";
+import Modal from "../../base/modal/modal";
 
 const BurgerConstructor = (props) => {
   const [orderNumber, setOrderNumber] = useState(null);
@@ -89,32 +91,16 @@ const BurgerConstructor = (props) => {
       </div>
 
       {orderNumber && (
-        <OrderDetails
-          orderNumber={orderNumber}
-          onClose={() => setOrderNumber(null)}
-        />
+        <Modal onClose={() => setOrderNumber(null)}>
+          <OrderDetails orderNumber={orderNumber} />
+        </Modal>
       )}
     </div>
   );
 };
 
 BurgerConstructor.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-      _id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  items: PropTypes.arrayOf(ingredientPropTypes).isRequired,
 };
 
 export default BurgerConstructor;

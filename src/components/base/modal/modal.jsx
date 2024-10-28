@@ -39,7 +39,7 @@ const Modal = (props) => {
 
       <ModalOverlay onClick={props.onClose} />
     </div>,
-    document.body
+    document.getElementById("modals")
   );
 };
 

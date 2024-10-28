@@ -1,10 +1,12 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { ingredientPropTypes } from "../../../utils/types";
 import styles from "./burger-ingredients.module.css";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientItem from "./ingredient-item/ingredient-item";
 import IngredientDetails from "./ingredient-details/ingredient-details";
+import Modal from "../../base/modal/modal";
 
 const ingredientTypes = [
   { name: "Булки", slug: "bun" },
@@ -63,32 +65,16 @@ const BurgerIngredients = (props) => {
       </div>
 
       {currentIngredient && (
-        <IngredientDetails
-          ingredient={currentIngredient}
-          onClose={closeIngredientModal}
-        />
+        <Modal title={"Детали ингредиента"} onClose={closeIngredientModal}>
+          <IngredientDetails ingredient={currentIngredient} />
+        </Modal>
       )}
     </div>
   );
 };
 
 BurgerIngredients.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-      _id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  items: PropTypes.arrayOf(ingredientPropTypes).isRequired,
 };
 
 export default BurgerIngredients;
