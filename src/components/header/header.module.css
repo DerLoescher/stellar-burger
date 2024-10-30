@@ -1,0 +1,24 @@
+.header {
+  width: 100%;
+  height: var(--header-height);
+
+  margin: 0 auto;
+
+  background: #1c1c21;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
