@@ -1,26 +1,24 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ORDERS_API} from "../../utils/dictionary.js";
+import {useFetch} from "../../utils/api.js";
+import {ORDERS_ENDPOINT} from "../../utils/dictionary.js";
+import {resetConstructor} from "../burger-constructor/burger-constructor-slice.js";
+
 
 export const createOrder = createAsyncThunk(
     'order/createOrder',
-    async (ingredientsIds = [], {rejectWithValue}) => {
-        try {
-            const response = await fetch(ORDERS_API, {
+    async (ingredientsIds, {dispatch}) => {
+        const response = await useFetch(ORDERS_ENDPOINT,
+            {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ingredients: ingredientsIds}),
-            });
+            })
 
-            if (!response.ok) {
-                return rejectWithValue(`Ошибка ${response.status}`);
-            }
+        dispatch(resetConstructor());
 
-            return await response.json();
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+        return response;
 
     }
 );
