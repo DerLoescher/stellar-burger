@@ -16,6 +16,7 @@ const BurgerConstructorFooter = () => {
     const constructorIngredients = useSelector((state) => state.burgerConstructor.burgerIngredients);
     const currentBun = useSelector((state) => state.burgerConstructor.currentBun);
     const orderNumber = useSelector((state) => state.order.createdOrder);
+    const loading = useSelector((state) => state.order.status === 'loading')
 
     const totalPrice = useMemo(() => {
         return (
@@ -42,19 +43,23 @@ const BurgerConstructorFooter = () => {
     return (
         <div>
             <div className={`${styles.footer} mt-10`}>
-                <div className={styles.total}>
-                    <p className="text text_type_digits-medium">{totalPrice}</p>
+                {loading ? <p className="text text_type_main-medium">Пожалуйста, подождите. Оформляется заказ...</p> :
+                    <>
+                        <div className={styles.total}>
+                            <p className="text text_type_digits-medium">{totalPrice}</p>
 
-                    <CurrencyIcon type="primary"/>
-                </div>
+                            <CurrencyIcon type="primary"/>
+                        </div>
 
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    size="large"
-                    onClick={placeOrder}>
-                    Оформить заказ
-                </Button>
+                        <Button
+                            htmlType="button"
+                            type="primary"
+                            size="large"
+                            disabled={!currentBun}
+                            onClick={placeOrder}>
+                            Оформить заказ
+                        </Button></>
+                }
             </div>
 
             {orderNumber && (

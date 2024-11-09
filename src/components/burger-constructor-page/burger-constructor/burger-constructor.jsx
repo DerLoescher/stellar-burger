@@ -41,8 +41,8 @@ const BurgerConstructor = () => {
 
             {constructorIngredients.length > 0 && (
                 <div className={styles["constructor-list"]}>
-                    {constructorIngredients.map((element, index) => (
-                        <DraggableIngredient key={element._id + index} {...element} index={index}/>
+                    {constructorIngredients.map((element) => (
+                        <DraggableIngredient key={element.uniqueId} {...element} uniqueId={element.uniqueId}/>
                     ))}
                 </div>
             )}
