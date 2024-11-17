@@ -1,106 +1,69 @@
-import { useMemo, useState } from "react";
-import PropTypes from "prop-types";
-import { ingredientPropTypes } from "../../../utils/types";
+import {useDispatch, useSelector} from 'react-redux';
+import {useDrop} from "react-dnd";
 import styles from "./burger-constructor.module.css";
+import {addIngredient} from "../../../services/burger-constructor/burger-constructor-slice.js";
 
-import {
-  Button,
-  ConstructorElement,
-  CurrencyIcon,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import OrderDetails from "./order-modal/order-details";
-import Modal from "../../base/modal/modal";
+import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
+import BurgerConstructorFooter from "./constructor-footer/constructor-footer.jsx";
+import DraggableIngredient from "./draggable-ingredient/draggable-ingredient.jsx";
 
-const BurgerConstructor = (props) => {
-  const [orderNumber, setOrderNumber] = useState(null);
+const BurgerConstructor = () => {
+    const dispatch = useDispatch();
 
-  const currentBun = useMemo(() => {
-    return props.items.find((item) => item.type === "bun");
-  }, [props.items]);
-  const chosenIngredients = useMemo(() => {
-    return props.items.filter((item) => item.type !== "bun");
-  }, [props.items]);
+    const allIngredients = useSelector((state) => state.ingredients.allIngredients);
+    const constructorIngredients = useSelector((state) => state.burgerConstructor.burgerIngredients);
+    const currentBun = useSelector(state => state.burgerConstructor.currentBun)
 
-  const totalPrice = useMemo(() => {
+    const [{isHover}, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop({id}) {
+            const ingredient = allIngredients.find((ingredient) => ingredient._id === id);
+            dispatch(addIngredient(ingredient))
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
+
     return (
-      chosenIngredients.reduce((result, item) => {
-        return (result += item.price);
-      }, 0) +
-      (currentBun?.price ?? 0) * 2
-    );
-  }, [currentBun?.price, chosenIngredients]);
+        <div className={`${styles["constructor-block"]} ${isHover ? styles['drop-target'] : ''}`} ref={dropTarget}>
 
-  const placeOrder = () => {
-    setOrderNumber("034536");
-  };
+            {currentBun &&
+                <div className='mb-4'>
+                    <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={`${currentBun.name} (верх)`}
+                        price={currentBun.price}
+                        thumbnail={currentBun.image}
+                    />
+                </div>}
 
-  return (
-    <div className={`${styles["constructor-block"]}`}>
-      {props.items.length > 0 && (
-        <>
-          <ConstructorElement
-            className="mb-4"
-            type="top"
-            isLocked={true}
-            text={`${currentBun.name} (верх)`}
-            price={currentBun.price}
-            thumbnail={currentBun.image}
-          />
+            {constructorIngredients.length > 0 && (
+                <div className={styles["constructor-list"]}>
+                    {constructorIngredients.map((element) => (
+                        <DraggableIngredient key={element.uniqueId} {...element} uniqueId={element.uniqueId}/>
+                    ))}
+                </div>
+            )}
 
-          <div className={styles["constructor-list"]}>
-            {chosenIngredients.map((element) => (
-              <div className={styles["constructor-item"]} key={element._id}>
-                <DragIcon type="primary" />
+            {currentBun &&
+                <div className='mt-4'>
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={`${currentBun.name} (низ)`}
+                        price={currentBun.price}
+                        thumbnail={currentBun.image}
+                    />
+                </div>
+            }
 
-                <ConstructorElement
-                  className="mb-4"
-                  text={element.name}
-                  price={element.price}
-                  thumbnail={element.image}
-                />
-              </div>
-            ))}
-          </div>
 
-          <ConstructorElement
-            className="mb-4"
-            type="bottom"
-            isLocked={true}
-            text={`${currentBun.name} (низ)`}
-            price={currentBun.price}
-            thumbnail={currentBun.image}
-          />
-        </>
-      )}
-
-      <div className={`${styles.footer} mt-10`}>
-        <div className={styles.total}>
-          <p className="text text_type_digits-medium">{totalPrice}</p>
-
-          <CurrencyIcon type="primary" />
+            <BurgerConstructorFooter/>
         </div>
-
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={placeOrder}>
-          Оформить заказ
-        </Button>
-      </div>
-
-      {orderNumber && (
-        <Modal onClose={() => setOrderNumber(null)}>
-          <OrderDetails orderNumber={orderNumber} />
-        </Modal>
-      )}
-    </div>
-  );
+    );
 };
 
-BurgerConstructor.propTypes = {
-  items: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-};
 
 export default BurgerConstructor;
