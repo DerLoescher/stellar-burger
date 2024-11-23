@@ -14,13 +14,13 @@ const NavigationMainMenu = () => {
     <nav>
       <ul className={styles.list}>
         <li className={`${styles.item} p-4`}>
-          <NavigationItem title="Конструктор">
+          <NavigationItem title="Конструктор" to='/'>
             <BurgerIcon type="primary" />
           </NavigationItem>
         </li>
 
         <li className={`${styles.item} p-4`}>
-          <NavigationItem title="Лента заказов" theme={theme}>
+          <NavigationItem title="Лента заказов" theme={theme} to='/list'>
             <ListIcon type={theme} />
           </NavigationItem>
         </li>

@@ -5,7 +5,7 @@ import styles from "../burger-constructor.module.css";
 import {
     moveConstructorItem,
     removeIngredient
-} from "../../../../services/burger-constructor/burger-constructor-slice.js";
+} from "../../../services/burger-constructor/burger-constructor-slice.js";
 
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 

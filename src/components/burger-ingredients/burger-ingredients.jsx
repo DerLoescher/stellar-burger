@@ -1,16 +1,10 @@
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./burger-ingredients.module.css";
-import {loadIngredients} from "../../../services/ingredients/ingredients-actions.js";
-import {
-    clearCurrentIngredient,
-    setCurrentIngredient
-} from "../../../services/ingredient-details/ingredient-details-slice.js";
+import {loadIngredients} from "../../services/ingredients/ingredients-actions.js";
 
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerIngredientItem from "./ingredient-item/ingredient-item";
-import IngredientDetails from "./ingredient-details/ingredient-details";
-import Modal from "../../base/modal/modal";
+import BurgerIngredientItem from "./ingredient-item/ingredient-item.jsx";
 
 
 const ingredientTypes = [
@@ -22,7 +16,6 @@ const ingredientTypes = [
 const BurgerIngredients = () => {
     const dispatch = useDispatch();
     const allIngredients = useSelector(store => store.ingredients.allIngredients);
-    const currentIngredient = useSelector(state => state.ingredientDetails.currentIngredient)
 
     const [currentTab, setCurrentTab] = useState(ingredientTypes[0].slug);
 
@@ -30,12 +23,6 @@ const BurgerIngredients = () => {
         dispatch(loadIngredients());
     }, []);
 
-    const openIngredientModal = (ingredient) => {
-        dispatch(setCurrentIngredient(ingredient))
-    };
-    const closeIngredientModal = () => {
-        dispatch(clearCurrentIngredient())
-    };
 
 
     const ingredientRefs = useRef({});
@@ -82,7 +69,6 @@ const BurgerIngredients = () => {
                                         <BurgerIngredientItem
                                             key={item._id}
                                             {...item}
-                                            onClick={() => openIngredientModal(item)}
                                         />
                                     );
                                 })}
@@ -90,12 +76,6 @@ const BurgerIngredients = () => {
                     </div>
                 ))}
             </div>
-
-            {currentIngredient && (
-                <Modal title={"Детали ингредиента"} onClose={closeIngredientModal}>
-                    <IngredientDetails ingredient={currentIngredient}/>
-                </Modal>
-            )}
         </div>
     );
 };

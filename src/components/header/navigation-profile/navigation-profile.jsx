@@ -7,7 +7,7 @@ const NavigationProfile = () => {
   const [theme] = useState("secondary");
 
   return (
-    <NavigationItem title="Личный кабинет" theme={theme}>
+    <NavigationItem title="Личный кабинет" theme={theme} to='/profile'>
       <ProfileIcon type={theme} />
     </NavigationItem>
   );
