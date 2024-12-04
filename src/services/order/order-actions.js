@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {useFetch} from "../../utils/api.js";
+import {fetchWithRefresh} from "../../utils/api.js";
 import {ORDERS_ENDPOINT} from "../../utils/dictionary.js";
 import {resetConstructor} from "../burger-constructor/burger-constructor-slice.js";
 
@@ -7,7 +7,7 @@ import {resetConstructor} from "../burger-constructor/burger-constructor-slice.j
 export const createOrder = createAsyncThunk(
     'order/createOrder',
     async (ingredientsIds, {dispatch}) => {
-        const response = await useFetch(ORDERS_ENDPOINT,
+        const response = await fetchWithRefresh(ORDERS_ENDPOINT,
             {
                 method: 'POST',
                 headers: {

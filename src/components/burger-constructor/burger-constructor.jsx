@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from "react-dnd";
 import styles from "./burger-constructor.module.css";
-import {addIngredient} from "../../../services/burger-constructor/burger-constructor-slice.js";
+import {addIngredient} from "../../services/burger-constructor/burger-constructor-slice.js";
 
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorFooter from "./constructor-footer/constructor-footer.jsx";

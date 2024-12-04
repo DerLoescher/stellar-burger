@@ -1,17 +1,20 @@
 import {useMemo} from "react";
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from "react-router-dom";
 import styles from "./constructor-footer.module.css";
-import {clearOrder} from "../../../../services/order/order-slice.js";
-import {createOrder} from "../../../../services/order/order-actions.js";
+import {clearOrder} from "../../../services/order/order-slice.js";
+import {createOrder} from "../../../services/order/order-actions.js";
 
 
 import {Button, CurrencyIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../../../base/modal/modal.jsx";
+import Modal from "../../base/modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
 
 
 const BurgerConstructorFooter = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const logged = useSelector((store) => store.user.isAuthChecked && store.user.user);
 
     const constructorIngredients = useSelector((state) => state.burgerConstructor.burgerIngredients);
     const currentBun = useSelector((state) => state.burgerConstructor.currentBun);
@@ -27,6 +30,10 @@ const BurgerConstructorFooter = () => {
     }, [constructorIngredients, currentBun]);
 
     const placeOrder = () => {
+        if (!logged) {
+            navigate('/login');
+            return;
+        }
         if (constructorIngredients.length > 0 || currentBun) {
             const constructorIngredientsIds = constructorIngredients.map(ingredient => ingredient._id);
             if (currentBun) {
@@ -58,7 +65,8 @@ const BurgerConstructorFooter = () => {
                             disabled={!currentBun}
                             onClick={placeOrder}>
                             Оформить заказ
-                        </Button></>
+                        </Button>
+                    </>
                 }
             </div>
 

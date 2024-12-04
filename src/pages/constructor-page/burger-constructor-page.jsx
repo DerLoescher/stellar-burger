@@ -2,9 +2,9 @@ import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import styles from "./burger-constructor-page.module.css";
 
-import PageLayout from "../page-layout/page-layout";
-import BurgerConstructor from "./burger-constructor/burger-constructor";
-import BurgerIngredients from "./burger-ingredients/burger-ingredients";
+import PageLayout from "../../components/page-layout/page-layout.jsx";
+import BurgerConstructor from "../../components/burger-constructor/burger-constructor.jsx";
+import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients.jsx";
 
 const BurgerConstructorPage = () => {
     return (

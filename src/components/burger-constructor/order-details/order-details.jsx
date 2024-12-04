@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
-
-import doneImage from "../../../../assets/images/done.png";
 import styles from "./order-details.module.css";
+import doneImage from "../../../assets/images/done.png";
 
 const OrderDetails = (props) => {
   return (
