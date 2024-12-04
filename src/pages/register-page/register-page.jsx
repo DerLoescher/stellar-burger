@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import useForm from "../../hooks/use-form.js";
 import styles from "./register-page.module.css";
 import {register} from "../../services/user/user-actions.js";
 
@@ -8,19 +9,19 @@ import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui
 import PageLayout from "../../components/page-layout/page-layout.jsx";
 
 const RegisterPage = () => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordVisible, setPasswordVisible] = useState(false)
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [form, setForm] = useForm({name: '', email: '', password: ''});
+
+    const [passwordVisible, setPasswordVisible] = useState(false)
+
+    const error = useSelector(state => state.user.error)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await dispatch(register({name, email, password}))
+        await dispatch(register({name: form.name, email: form.email, password: form.password}))
 
         navigate('/');
     }
@@ -35,17 +36,15 @@ const RegisterPage = () => {
                     <Input
                         type={'text'}
                         placeholder={'Имя'}
-                        onChange={e => setName(e.target.value)}
-                        value={name}
+                        onChange={setForm}
+                        value={form.name}
                         name={'name'}
-                        error={false}
-                        errorText={'Ошибка'}
                         size={'default'}
                     />
 
                     <EmailInput
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
+                        onChange={setForm}
+                        value={form.email}
                         name={'email'}
                         isIcon={false}
                     />
@@ -53,9 +52,9 @@ const RegisterPage = () => {
                     <Input
                         type={passwordVisible ? 'text' : 'password'}
                         placeholder={'Пароль'}
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={setForm}
                         icon={'ShowIcon'}
-                        value={password}
+                        value={form.password}
                         name={'password'}
                         onIconClick={() => setPasswordVisible(true)}
                     />
@@ -64,6 +63,8 @@ const RegisterPage = () => {
                         Зарегистрироваться
                     </Button>
                 </form>
+
+                {error && <p className="text text_type_main-default text_color_error">{error}</p>}
 
                 <p className="text text_type_main-default text_color_inactive mt-20">Уже зарегистрированы? <Link
                     className={`${styles.link} text_color_accent`} to='/login'>Войти</Link></p>

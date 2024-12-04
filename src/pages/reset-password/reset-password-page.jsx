@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import useForm from "../../hooks/use-form.js";
 import {Link, useNavigate} from "react-router-dom";
 import styles from "./reset-password-page.module.css";
 import {RESET_PASS_ENDPOINT} from "../../utils/dictionary.js";
@@ -17,8 +18,7 @@ const ResetPasswordPage = () => {
         }, []
     )
 
-    const [token, setToken] = useState('')
-    const [password, setPassword] = useState('')
+    const [form, setForm] = useForm({token: '', password: ''});
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -32,7 +32,7 @@ const ResetPasswordPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({password, token}),
+                body: JSON.stringify({password: form.password, token: form.password}),
             });
 
         sessionStorage.setItem('forgot', 'empty');
@@ -54,9 +54,9 @@ const ResetPasswordPage = () => {
                     <Input
                         type={passwordVisible ? 'text' : 'password'}
                         placeholder={'Введите новый пароль'}
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={setForm}
                         icon={'ShowIcon'}
-                        value={password}
+                        value={form.password}
                         name={'password'}
                         onIconClick={showPassword}
                     />
@@ -64,8 +64,8 @@ const ResetPasswordPage = () => {
                     <Input
                         type={'text'}
                         placeholder={'Введите код из письма'}
-                        onChange={e => setToken(e.target.value)}
-                        value={token}
+                        onChange={setForm}
+                        value={form.token}
                         name={'token'}
                     />
 

@@ -16,6 +16,7 @@ import ProfileContent from "./components/profile/profile-content/profile-content
 import IngredientPage from "./pages/ingredient-page/ingredient-page.jsx";
 import Modal from "./components/base/modal/modal.jsx";
 import IngredientDetails from "./components/burger-ingredients/ingredient-details/ingredient-details.jsx";
+import {NotFound404} from "./pages/not-found-page/not-found.jsx";
 
 function App() {
     const dispatch = useDispatch();
@@ -50,7 +51,7 @@ function App() {
             )}
 
             <Routes location={background || location}>
-                <Route path="*" element={<div>123</div>} />
+                <Route path="*" element={<NotFound404/>} />
 
                 <Route path='/' element={<BurgerConstructorPage/>}/>
 

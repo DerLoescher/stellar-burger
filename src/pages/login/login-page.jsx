@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import useForm from "../../hooks/use-form.js";
 import styles from "./login-page.module.css";
 import {login} from "../../services/user/user-actions.js";
 
@@ -9,18 +10,18 @@ import PageLayout from "../../components/page-layout/page-layout.jsx";
 
 const LoginPage = () => {
     const navigate = useNavigate();
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
     const dispatch = useDispatch();
 
+    const [form, setForm] = useForm({email: '', password: ''});
+
     const [passwordVisible, setPasswordVisible] = useState(false)
+
+    const error = useSelector(state => state.user.error)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await dispatch(login({email, password}))
+        await dispatch(login({email: form.email, password: form.password}))
 
         navigate(-1);
     }
@@ -33,8 +34,8 @@ const LoginPage = () => {
                     <p className="text text_type_main-medium">Вход</p>
 
                     <EmailInput
-                        onChange={e => setEmail(e.target.value)}
-                        value={email}
+                        onChange={setForm}
+                        value={form.email}
                         name={'email'}
                         isIcon={false}
                     />
@@ -42,9 +43,9 @@ const LoginPage = () => {
                     <Input
                         type={passwordVisible ? 'text' : 'password'}
                         placeholder={'Пароль'}
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={setForm}
                         icon={'ShowIcon'}
-                        value={password}
+                        value={form.password}
                         name={'password'}
                         onIconClick={() => setPasswordVisible(true)}
                     />
@@ -52,7 +53,10 @@ const LoginPage = () => {
                     <Button htmlType="submit" type="primary" size="medium">
                         Войти
                     </Button>
+
                 </form>
+
+                {error && <p className="text text_type_main-default text_color_error">{error}</p>}
 
                 <p className="text text_type_main-default text_color_inactive mt-20">Вы — новый пользователь? <Link
                     className={`${styles.link} text_color_accent`} to='/register'>Зарегистрироваться</Link></p>
