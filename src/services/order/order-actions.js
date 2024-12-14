@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {fetchWithRefresh} from "../../utils/api.js";
-import {ORDERS_ENDPOINT} from "../../utils/dictionary.js";
+import {fetchWithRefresh} from "../../utils/api.ts";
+import {ORDERS_ENDPOINT} from "../../utils/dictionary.ts";
 import {resetConstructor} from "../burger-constructor/burger-constructor-slice.js";
 
 

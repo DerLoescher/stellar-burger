@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {fetchWithRefresh} from "../../utils/api.js";
-import {INGREDIENTS_LIST_ENDPOINT} from "../../utils/dictionary.js";
+import {fetchWithRefresh} from "../../utils/api.ts";
+import {INGREDIENTS_LIST_ENDPOINT} from "../../utils/dictionary.ts";
 
 export const loadIngredients = createAsyncThunk(
     'ingredients/loadIngredients',
