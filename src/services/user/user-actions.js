@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {fetchWithCheck, fetchWithRefresh} from "../../utils/api.js";
-import {LOGIN_ENDPOINT, LOGOUT_ENDPOINT, REGISTER_ENDPOINT, USER_ENDPOINT} from "../../utils/dictionary.js";
+import {fetchWithCheck, fetchWithRefresh} from "../../utils/api.ts";
+import {LOGIN_ENDPOINT, LOGOUT_ENDPOINT, REGISTER_ENDPOINT, USER_ENDPOINT} from "../../utils/dictionary.ts";
 
 
 export const login = createAsyncThunk(

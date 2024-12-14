@@ -1,5 +1,4 @@
 import {combineSlices, configureStore as createStore} from "@reduxjs/toolkit";
-import {composeWithDevTools} from 'redux-devtools-extension';
 
 import burgerConstructorSlice from './burger-constructor/burger-constructor-slice.js';
 import ingredientsSlice from './ingredients/ingredients-slice.js';
@@ -13,6 +12,5 @@ export const configureStore = (initialState) => {
     return createStore({
         reducer: rootReducer,
         preloadedState: initialState,
-        devTools: composeWithDevTools(),
     });
 };
