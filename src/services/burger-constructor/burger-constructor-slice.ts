@@ -1,22 +1,29 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {v4 as uuidv4} from 'uuid';
+
+interface BurgerConstructorState {
+    currentBun: TDraggableIngredient | null;
+    burgerIngredients: TDraggableIngredient[];
+}
+
+const initialState: BurgerConstructorState = {
+    currentBun: null,
+    burgerIngredients: [],
+};
 
 const burgerConstructorSlice = createSlice({
     name: 'burgerConstructor',
-    initialState: {
-        currentBun: null,
-        burgerIngredients: [],
-    },
+    initialState,
     reducers: {
         addIngredient: {
-            reducer: (state, action) => {
+            reducer: (state, action: PayloadAction<TDraggableIngredient>) => {
                 if (action.payload.type === 'bun') {
                     state.currentBun = action.payload;
                 } else {
                     state.burgerIngredients.push(action.payload);
                 }
             },
-            prepare: (ingredient) => {
+            prepare: (ingredient: TIngredient) => {
                 return {
                     payload: {
                         ...ingredient,
@@ -25,11 +32,11 @@ const burgerConstructorSlice = createSlice({
                 }
             }
         },
-        removeIngredient(state, action) {
+        removeIngredient(state, action: PayloadAction<string>) {
             const ingredientIndex = state.burgerIngredients.findIndex(ingredient => ingredient._id === action.payload);
             state.burgerIngredients.splice(ingredientIndex, 1);
         },
-        moveConstructorItem(state, action) {
+        moveConstructorItem(state, action: PayloadAction<{ fromUniqueId: string; toUniqueId: string }>) {
             const {fromUniqueId, toUniqueId} = action.payload;
 
             const fromIndex = state.burgerIngredients.findIndex(ingredient => ingredient.uniqueId === fromUniqueId);

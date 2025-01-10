@@ -44,7 +44,7 @@ export function fetchWithCheck(endpoint: string, options: IFetchOptions = {}): P
 }
 
 
-export const fetchWithRefresh = async (endpoint: string, options: IFetchOptions): Promise<any> => {
+export const fetchWithRefresh = async (endpoint: string, options?: IFetchOptions): Promise<any> => {
     const accessToken: string | null = localStorage.getItem("accessToken");
     options = {
         ...options,

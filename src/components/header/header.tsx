@@ -1,8 +1,8 @@
 import styles from "./header.module.css";
 
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
-import NavigationMainMenu from "./navigation-main-menu/navigation-main-menu.js";
-import NavigationProfile from "./navigation-profile/navigation-profile.js";
+import NavigationMainMenu from "./navigation-main-menu/navigation-main-menu.tsx";
+import NavigationProfile from "./navigation-profile/navigation-profile.tsx";
 
 function AppHeader() {
   return (

@@ -1,9 +1,9 @@
 import styles from "./ingredient-details.module.css";
 import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {loadIngredients} from "../../../services/ingredients/ingredients-actions.js";
+import {loadIngredients} from "../../../services/ingredients/ingredients-actions.ts";
+import {useDispatch, useSelector} from "../../../services/store.ts";
 
-const ingredientDetailTypes = [
+const ingredientDetailTypes: { title: string; slug: TNutritionKeys }[] = [
     {title: "Калории,ккал", slug: "calories"},
     {title: "Белки, г", slug: "proteins"},
     {title: "Жиры, г", slug: "fat"},
@@ -14,13 +14,10 @@ const IngredientDetails = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
 
-    // @ts-ignore
     const ingredient = useSelector(state => state.ingredients.allIngredients.find(ingredient => ingredient._id === id));
-    // @ts-ignore
     const loading = useSelector(state => state.ingredients.status === "loading");
 
     if (!ingredient) {
-        // @ts-ignore
         dispatch(loadIngredients());
     }
 

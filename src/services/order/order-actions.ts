@@ -1,10 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {fetchWithRefresh} from "../../utils/api.ts";
 import {ORDERS_ENDPOINT} from "../../utils/dictionary.ts";
-import {resetConstructor} from "../burger-constructor/burger-constructor-slice.js";
+import {resetConstructor} from "../burger-constructor/burger-constructor-slice.ts";
 
 
-export const createOrder = createAsyncThunk(
+export const createOrder = createAsyncThunk<TOrderResponse, string[]>(
     'order/createOrder',
     async (ingredientsIds, {dispatch}) => {
         const response = await fetchWithRefresh(ORDERS_ENDPOINT,
@@ -19,6 +19,5 @@ export const createOrder = createAsyncThunk(
         dispatch(resetConstructor());
 
         return response;
-
     }
 );

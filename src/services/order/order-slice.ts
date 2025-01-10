@@ -1,14 +1,21 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {createOrder} from "./order-actions.js";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createOrder} from "./order-actions.ts";
 
+interface OrderState {
+    createdOrder: number | null;
+    status: TStatus;
+    error: string | undefined | null;
+}
+
+const initialState: OrderState = {
+    createdOrder: null,
+    status: 'idle',
+    error: null,
+};
 
 const orderSlice = createSlice({
     name: 'order',
-    initialState: {
-        createdOrder: null,
-        status: 'idle',
-        error: null,
-    },
+    initialState,
     reducers: {
         clearOrder: (state) => {
             state.createdOrder = null;
@@ -21,7 +28,7 @@ const orderSlice = createSlice({
             .addCase(createOrder.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(createOrder.fulfilled, (state, action) => {
+            .addCase(createOrder.fulfilled, (state, action: PayloadAction<TOrderResponse>) => {
                 state.status = 'succeeded';
                 state.createdOrder = action.payload.order.number;
             })

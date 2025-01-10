@@ -3,7 +3,7 @@ import {fetchWithCheck, fetchWithRefresh} from "../../utils/api.ts";
 import {LOGIN_ENDPOINT, LOGOUT_ENDPOINT, REGISTER_ENDPOINT, USER_ENDPOINT} from "../../utils/dictionary.ts";
 
 
-export const login = createAsyncThunk(
+export const login = createAsyncThunk<TUser, Omit<TUserForm, 'name'>>(
     'user/login',
     async ({email, password}) => {
         const response = await fetchWithCheck(LOGIN_ENDPOINT,
@@ -19,7 +19,6 @@ export const login = createAsyncThunk(
         localStorage.setItem("accessToken", response.accessToken);
 
         return response.user;
-
     }
 );
 
@@ -42,7 +41,7 @@ export const logout = createAsyncThunk(
     }
 );
 
-export const register = createAsyncThunk(
+export const register = createAsyncThunk<TUser, TUserForm>(
     'user/register',
     async ({name, email, password}) => {
         const response = await fetchWithCheck(REGISTER_ENDPOINT,
@@ -62,7 +61,7 @@ export const register = createAsyncThunk(
 );
 
 
-export const getUser = createAsyncThunk(
+export const getUser = createAsyncThunk<TUser>(
     'user/getUser',
     async () => {
         const response = await fetchWithRefresh(USER_ENDPOINT,
@@ -70,7 +69,7 @@ export const getUser = createAsyncThunk(
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem("accessToken")
+                    'Authorization': localStorage.getItem("accessToken") || ''
                 },
             });
 
@@ -78,7 +77,7 @@ export const getUser = createAsyncThunk(
     }
 )
 
-export const editUser = createAsyncThunk(
+export const editUser = createAsyncThunk<TUser, TUserForm>(
     'user/editUser',
     async (changedFields) => {
         const response = await fetchWithRefresh(USER_ENDPOINT,
@@ -86,7 +85,7 @@ export const editUser = createAsyncThunk(
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem("accessToken")
+                    'Authorization': localStorage.getItem("accessToken") || ''
                 },
                 body: JSON.stringify(changedFields)
             });

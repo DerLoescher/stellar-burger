@@ -1,29 +1,24 @@
 import {useMemo} from "react";
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from "../../../services/store.ts";
 import {useNavigate} from "react-router-dom";
 import styles from "./constructor-footer.module.css";
-import {clearOrder} from "../../../services/order/order-slice.js";
-import {createOrder} from "../../../services/order/order-actions.js";
+import {clearOrder} from "../../../services/order/order-slice.ts";
+import {createOrder} from "../../../services/order/order-actions.ts";
 
 
 import {Button, CurrencyIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../base/modal/modal.tsx";
-import OrderDetails from "../order-details/order-details.js";
+import OrderDetails from "../order-details/order-details.tsx";
 
 
 const BurgerConstructorFooter = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // @ts-ignore
     const logged = useSelector((state) => state.user.isAuthChecked && state.user.user);
 
-    // @ts-ignore
     const constructorIngredients = useSelector((state) => state.burgerConstructor.burgerIngredients);
-    // @ts-ignore
     const currentBun = useSelector((state) => state.burgerConstructor.currentBun);
-    // @ts-ignore
     const orderNumber = useSelector((state) => state.order.createdOrder);
-    // @ts-ignore
     const loading = useSelector((state) => state.order.status === 'loading')
 
     const totalPrice = useMemo(() => {
@@ -44,7 +39,6 @@ const BurgerConstructorFooter = () => {
             if (currentBun) {
                 constructorIngredientsIds.push(currentBun._id);
             }
-            // @ts-ignore
             dispatch(createOrder(constructorIngredientsIds));
         }
     };

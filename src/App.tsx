@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
-import {useDispatch} from "react-redux";
-import {getUser} from "./services/user/user-actions.js";
+import {useDispatch} from "./services/store.ts";
+import {getUser} from "./services/user/user-actions.ts";
 import "./App.css";
 
 import AppHeader from "./components/header/header.tsx";
@@ -30,7 +30,6 @@ function App() {
     };
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getUser())
     }, []);
 
@@ -52,7 +51,7 @@ function App() {
             )}
 
             <Routes location={background || location}>
-                <Route path="*" element={<NotFound404/>} />
+                <Route path="*" element={<NotFound404/>}/>
 
                 <Route path='/' element={<BurgerConstructorPage/>}/>
 

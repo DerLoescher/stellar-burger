@@ -1,7 +1,7 @@
-import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from "react-dnd";
 import styles from "./burger-constructor.module.css";
-import {addIngredient} from "../../services/burger-constructor/burger-constructor-slice.js";
+import {useDispatch, useSelector} from "../../services/store.ts";
+import {addIngredient} from "../../services/burger-constructor/burger-constructor-slice.ts";
 
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorFooter from "./constructor-footer/constructor-footer.tsx";
@@ -10,18 +10,18 @@ import DraggableIngredient from "./draggable-ingredient/draggable-ingredient.tsx
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
 
-    // @ts-ignore
     const allIngredients: TIngredient[] = useSelector((state) => state.ingredients.allIngredients);
-    // @ts-ignore
     const constructorIngredients = useSelector((state) => state.burgerConstructor.burgerIngredients);
-    // @ts-ignore
     const currentBun = useSelector(state => state.burgerConstructor.currentBun)
 
     const [{isHover}, dropTarget] = useDrop({
         accept: "ingredient",
         drop({id}: { id: string }): void {
             const ingredient = allIngredients.find((ingredient: TIngredient) => ingredient._id === id);
-            dispatch(addIngredient(ingredient))
+
+            if (ingredient) {
+                dispatch(addIngredient(ingredient))
+            }
         },
         collect: monitor => ({
             isHover: monitor.isOver(),

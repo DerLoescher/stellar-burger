@@ -1,5 +1,5 @@
 import {FC, useMemo} from "react";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../../services/store.ts";
 import {useDrag} from "react-dnd";
 import styles from "./ingredient-item.module.css";
 
@@ -15,11 +15,8 @@ const BurgerIngredientItem: FC<IBurgerIngredientItem> = (props) => {
         item: {id: props._id},
     });
 
-    // @ts-ignore
     const constructorIngredients: TIngredient[] = useSelector((state) => state.burgerConstructor.burgerIngredients);
-    // @ts-ignore
     const currentBun = useSelector(state => state.burgerConstructor.currentBun)
-    // @ts-ignore
     const location = useLocation();
 
     const count = useMemo(() => {
