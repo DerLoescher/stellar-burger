@@ -8,7 +8,7 @@ import {createOrder} from "../../../services/order/order-actions.ts";
 
 import {Button, CurrencyIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../base/modal/modal.tsx";
-import OrderDetails from "../order-details/order-details.tsx";
+import OrderConfirmation from "../order-confirmation/order-confirmation.tsx";
 
 
 const BurgerConstructorFooter = () => {
@@ -18,7 +18,7 @@ const BurgerConstructorFooter = () => {
 
     const constructorIngredients = useSelector((state) => state.burgerConstructor.burgerIngredients);
     const currentBun = useSelector((state) => state.burgerConstructor.currentBun);
-    const orderNumber = useSelector((state) => state.order.createdOrder);
+    const orderNumber = useSelector((state) => state.order.createdOrderNumber);
     const loading = useSelector((state) => state.order.status === 'loading')
 
     const totalPrice = useMemo(() => {
@@ -72,7 +72,7 @@ const BurgerConstructorFooter = () => {
 
             {orderNumber && (
                 <Modal onClose={handleClearOrder}>
-                    <OrderDetails orderNumber={orderNumber}/>
+                    <OrderConfirmation orderNumber={orderNumber}/>
                 </Modal>
             )}
         </div>

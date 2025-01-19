@@ -1,0 +1,14 @@
+.wrapper {
+    overflow-y: scroll;
+    max-height: 100%;
+    margin-right: -6px;
+    padding-right: 6px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+}

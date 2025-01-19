@@ -4,7 +4,7 @@ import {ORDERS_ENDPOINT} from "../../utils/dictionary.ts";
 import {resetConstructor} from "../burger-constructor/burger-constructor-slice.ts";
 
 
-export const createOrder = createAsyncThunk<TOrderResponse, string[]>(
+export const createOrder = createAsyncThunk<TCreateOrderResponse, string[]>(
     'order/createOrder',
     async (ingredientsIds, {dispatch}) => {
         const response = await fetchWithRefresh(ORDERS_ENDPOINT,
@@ -14,6 +14,23 @@ export const createOrder = createAsyncThunk<TOrderResponse, string[]>(
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ingredients: ingredientsIds}),
+            })
+
+        dispatch(resetConstructor());
+
+        return response;
+    }
+);
+
+export const loadOrderDetail = createAsyncThunk<TOrderDetailResponse, string>(
+    'order/loadOrderDetail',
+    async (orderId: string, {dispatch}) => {
+        const response = await fetchWithRefresh(`${ORDERS_ENDPOINT}/${orderId}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             })
 
         dispatch(resetConstructor());

@@ -19,7 +19,7 @@ type TStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 type TOrder = {
     createdAt: string;
-    ingredients: TIngredient[];
+    ingredients: string[];
     name: string;
     number: number;
     owner: {
@@ -29,14 +29,19 @@ type TOrder = {
         updatedAt: string;
     };
     price: number;
-    status: string;
+    status: TOrderStatus;
     updatedAt: string;
     _id: string;
 }
 
-type TOrderResponse = {
+type TCreateOrderResponse = {
     name: string;
     order: TOrder;
+    success: boolean;
+}
+
+type TOrderDetailResponse = {
+    orders: TOrder[];
     success: boolean;
 }
 
@@ -46,3 +51,21 @@ type TUser = {
 }
 
 type TUserForm = { name?: string, email?: string, password?: string }
+
+type TOrderStatus = 'created' | 'pending' | 'done';
+
+type TFeedItem = {
+    createdAt: string;
+    ingredients: string[]
+    name: string;
+    number: number;
+    status: TOrderStatus
+    updatedAt: string;
+    _id: string;
+}
+
+type TFeedResponse = {
+    orders: TFeedItem[]
+    total: number;
+    totalToday: number;
+}

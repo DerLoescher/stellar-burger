@@ -33,6 +33,17 @@ const ingredientsSlice = createSlice({
                 state.allIngredients = [];
             });
     },
+    selectors: {
+        getIngredientsRecord: (state) => {
+            return state.allIngredients.reduce((accumulator: Record<string, TIngredient>, ingredient) => {
+                accumulator[ingredient._id] = ingredient;
+                return accumulator;
+            }, {});
+
+        },
+    }
 });
+
+export const {getIngredientsRecord} = ingredientsSlice.selectors;
 
 export default ingredientsSlice;

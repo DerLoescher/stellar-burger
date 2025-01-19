@@ -1,7 +1,6 @@
-import {useEffect, useRef, useState} from "react";
-import {useDispatch, useSelector} from "../../services/store.ts";
+import {useRef, useState} from "react";
+import {useSelector} from "../../services/store.ts";
 import styles from "./burger-ingredients.module.css";
-import {loadIngredients} from "../../services/ingredients/ingredients-actions.ts";
 
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientItem from "./ingredient-item/ingredient-item.tsx";
@@ -19,14 +18,9 @@ type IngredientRefs = {
 
 
 const BurgerIngredients = () => {
-        const dispatch = useDispatch();
         const allIngredients = useSelector(store => store.ingredients.allIngredients);
 
         const [currentTab, setCurrentTab] = useState(ingredientTypes[0].slug);
-
-        useEffect(() => {
-            dispatch(loadIngredients());
-        }, []);
 
 
         const ingredientRefs = useRef<IngredientRefs>({});

@@ -17,7 +17,7 @@ const NavigationMainMenu = () => {
                 </li>
 
                 <li className={`${styles.item} p-4`}>
-                    <NavigationItem title="Лента заказов" to='/list'>
+                    <NavigationItem title="Лента заказов" to='/feed'>
                         <ListIcon type={theme}/>
                     </NavigationItem>
                 </li>

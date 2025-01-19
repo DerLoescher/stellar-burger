@@ -39,7 +39,7 @@ const ProfileContent = () => {
     }
 
 
-    return <form className={styles.form} onSubmit={onSubmit}>
+    return <form className={`${styles.form}  mt-30`} onSubmit={onSubmit}>
         <ProfileInput type={'text'} name='name' placeholder={'Имя'} value={form.name} setValue={setForm}/>
 
         <ProfileInput type={'email'} name='email' placeholder={'Логин'} value={form.email} setValue={setForm}/>
