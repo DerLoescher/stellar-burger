@@ -38,6 +38,21 @@ const OrderDetails = () => {
             return acc + burgerIngredients[ingredientId]?.price || 0;
         }, 0) ?? 0
     }, [currentOrder, burgerIngredients])
+    const ingredients = useMemo(() => {
+        const result: {
+            [id: string]: number;
+        } = {};
+
+        currentOrder?.ingredients.forEach((ingredientId) => {
+            if (result[ingredientId] > 0) {
+                result[ingredientId] += 1;
+            } else {
+                result[ingredientId] = 1;
+            }
+        })
+
+        return result;
+    }, [currentOrder?.ingredients])
 
     const formattedStatus = useOrderStatus(currentOrder?.status);
 
@@ -59,8 +74,8 @@ const OrderDetails = () => {
                         <p className="text text_type_main-medium text_color_primary mb-6">Состав:</p>
 
                         <ul>
-                            {currentOrder.ingredients.map((ingredientId) => (
-                                <li key={ingredientId} className={`${styles.ingredient} mb-4`}>
+                            {Object.keys(ingredients).map((ingredientId, index) => (
+                                <li key={ingredientId + index} className={`${styles.ingredient} mb-4`}>
                                     <div className={`${styles.ingredient}`}>
                                         <BurgerIngredientMiniature key={ingredientId}
                                                                    image={burgerIngredients[ingredientId].image}
@@ -70,6 +85,10 @@ const OrderDetails = () => {
                                     </div>
 
                                     <div className={`${styles.ingredient}`}>
+                                        <p className="text text_type_digits-default text_color_primary mr-2">{ingredients[ingredientId]}</p>
+
+                                        <p className="text text_type_digits-default text_color_primary mr-2">x</p>
+
                                         <p className="text text_type_digits-default text_color_primary mr-2">{burgerIngredients[ingredientId].price}</p>
 
                                         <CurrencyIcon type="primary"/>

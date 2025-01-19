@@ -48,9 +48,9 @@ function App() {
                     <Route
                         path='/ingredients/:id'
                         element={
-                            <OnlyAuth component={<Modal onClose={handleModalClose}>
+                            <Modal title='Детали ингредиента' onClose={handleModalClose}>
                                 <IngredientDetails/>
-                            </Modal>}/>
+                            </Modal>
                         }
                     />
 
@@ -66,9 +66,9 @@ function App() {
                     <Route
                         path='/feed/:number'
                         element={
-                            <OnlyAuth component={<Modal onClose={handleModalClose}>
+                            <Modal onClose={handleModalClose}>
                                 <OrderDetails/>
-                            </Modal>}/>
+                            </Modal>
                         }
                     />
                 </Routes>
@@ -79,12 +79,11 @@ function App() {
 
                 <Route path='/' element={<BurgerConstructorPage/>}/>
 
-                <Route path='/ingredients/:id' element={<OnlyAuth component={<IngredientPage/>}/>}/>
+                <Route path='/ingredients/:id' element={<IngredientPage/>}/>
 
                 <Route path='/feed' element={<FeedPage/>}/>
 
-                <Route path='/feed/:number' element={<OnlyAuth component={
-                    <OrderDetailsPage/>}/>}/>
+                <Route path='/feed/:number' element={<OrderDetailsPage/>}/>
 
                 <Route path='/profile' element={<OnlyAuth component={<ProfilePage/>}/>}>
                     <Route path='' element={<ProfileContent/>}/>
@@ -92,7 +91,7 @@ function App() {
                     <Route path='/profile/orders' element={<ProfileOrders/>}/>
                 </Route>
 
-                <Route path='/profile/orders/:number' element={<OrderDetailsPage/>}/>
+                <Route path='/profile/orders/:number' element={<OnlyAuth component={<OrderDetailsPage/>}/>}/>
 
                 <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>}/>}/>
 

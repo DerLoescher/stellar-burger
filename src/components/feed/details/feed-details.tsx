@@ -26,7 +26,7 @@ const FeedDetails = () => {
 
                     <ul>
                         {doneOrders.map((order) => {
-                            return <li className='mb-2'>
+                            return <li key={order._id} className='mb-2'>
                                 <p className="text text_type_digits-default text_color_success">{order.number}</p>
                             </li>
                         })}
@@ -38,7 +38,7 @@ const FeedDetails = () => {
 
                     <ul>
                         {pendingOrders.map((order) => {
-                            return <li className='mb-2'>
+                            return <li key={order._id} className='mb-2'>
                                 <p className="text text_type_digits-default">{order.number}</p>
                             </li>
                         })}

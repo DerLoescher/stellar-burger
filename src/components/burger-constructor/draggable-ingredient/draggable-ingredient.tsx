@@ -1,7 +1,8 @@
-import {useDispatch} from "react-redux";
+
 import {useDrag, useDrop} from "react-dnd";
-import styles from "../burger-constructor.module.css";
+import {useDispatch} from "../../../services/store.ts";
 import {moveConstructorItem, removeIngredient} from "../../../services/burger-constructor/burger-constructor-slice.ts";
+import styles from "../burger-constructor.module.css";
 
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {FC} from "react";

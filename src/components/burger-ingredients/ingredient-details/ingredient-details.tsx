@@ -1,7 +1,7 @@
+import {FC} from "react";
 import styles from "./ingredient-details.module.css";
 import {useParams} from "react-router-dom";
-import {loadIngredients} from "../../../services/ingredients/ingredients-actions.ts";
-import {useDispatch, useSelector} from "../../../services/store.ts";
+import {useSelector} from "../../../services/store.ts";
 
 const ingredientDetailTypes: { title: string; slug: TNutritionKeys }[] = [
     {title: "Калории,ккал", slug: "calories"},
@@ -10,16 +10,15 @@ const ingredientDetailTypes: { title: string; slug: TNutritionKeys }[] = [
     {title: "Углеводы, г", slug: "carbohydrates"},
 ];
 
-const IngredientDetails = () => {
-    const dispatch = useDispatch();
+interface IIngredientDetails {
+    title?: string;
+}
+
+const IngredientDetails: FC<IIngredientDetails> = ({title}) => {
     const {id} = useParams();
 
     const ingredient = useSelector(state => state.ingredients.allIngredients.find(ingredient => ingredient._id === id));
     const loading = useSelector(state => state.ingredients.status === "loading");
-
-    if (!ingredient) {
-        dispatch(loadIngredients());
-    }
 
     return (ingredient &&
         <div className={styles.wrapper}>
@@ -27,6 +26,8 @@ const IngredientDetails = () => {
                 (<div>Loading...</div>)
                 :
                 (<>
+                    {title && (<p className='className="text text_type_main-large'>{title}</p>)}
+
                     <img
                         className={styles.image}
                         src={ingredient.image_large}
