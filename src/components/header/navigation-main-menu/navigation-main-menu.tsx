@@ -2,7 +2,7 @@ import {useState} from "react";
 import styles from "./navigation-main-menu.module.css";
 
 import {BurgerIcon, ListIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
-import NavigationItem from "../navigation-item/navigation-item.js";
+import NavigationItem from "../navigation-item/navigation-item.tsx";
 
 const NavigationMainMenu = () => {
     const [theme] = useState<TIconTypes>("secondary");
@@ -17,7 +17,7 @@ const NavigationMainMenu = () => {
                 </li>
 
                 <li className={`${styles.item} p-4`}>
-                    <NavigationItem title="Лента заказов" to='/list'>
+                    <NavigationItem title="Лента заказов" to='/feed'>
                         <ListIcon type={theme}/>
                     </NavigationItem>
                 </li>

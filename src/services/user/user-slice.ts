@@ -1,17 +1,25 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {editUser, getUser, login, logout, register} from "./user-actions.js";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {editUser, getUser, login, logout, register} from "./user-actions.ts";
 
+interface UserState {
+    isAuthChecked: boolean;
+    user: TUser | null;
+    error: string | undefined | null;
+}
+
+const initialState: UserState = {
+    isAuthChecked: false,
+    user: null,
+    error: null,
+};
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        isAuthChecked: false,
-        user: null,
-        error: null,
-    },
+    initialState,
+    reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(login.fulfilled, (state, action) => {
+            .addCase(login.fulfilled, (state, action: PayloadAction<TUser>) => {
                 state.user = action.payload;
                 state.isAuthChecked = true;
                 state.error = null;
@@ -19,7 +27,7 @@ const userSlice = createSlice({
             .addCase(login.rejected, (state, action) => {
                 state.error = action.error.message;
             })
-            .addCase(register.fulfilled, (state, action) => {
+            .addCase(register.fulfilled, (state, action: PayloadAction<TUser>) => {
                 state.user = action.payload;
                 state.isAuthChecked = true;
                 state.error = null;
@@ -31,7 +39,7 @@ const userSlice = createSlice({
                 state.user = null;
                 state.error = null;
             })
-            .addCase(getUser.fulfilled, (state, action) => {
+            .addCase(getUser.fulfilled, (state, action: PayloadAction<TUser>) => {
                 state.user = action.payload;
                 state.isAuthChecked = true;
                 state.error = null;
@@ -39,7 +47,7 @@ const userSlice = createSlice({
             .addCase(getUser.rejected, (state) => {
                 state.isAuthChecked = true;
             })
-            .addCase(editUser.fulfilled, (state, action) => {
+            .addCase(editUser.fulfilled, (state, action: PayloadAction<TUser>) => {
                 state.user = action.payload;
                 state.error = null;
             })

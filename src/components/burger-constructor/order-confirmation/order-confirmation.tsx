@@ -1,12 +1,12 @@
-import styles from "./order-details.module.css";
+import styles from "./order-confirmation.module.css";
 import doneImage from "../../../assets/images/done.png";
 import {FC} from "react";
 
-interface IOrderDetails {
+interface IOrderConfirmation {
     orderNumber: number;
 }
 
-const OrderDetails: FC<IOrderDetails> = (props) => {
+const OrderConfirmation: FC<IOrderConfirmation> = (props) => {
     return (
         <div className={styles.wrapper}>
             <p className="text text_type_digits-large mb-8 mt-4">
@@ -28,4 +28,4 @@ const OrderDetails: FC<IOrderDetails> = (props) => {
     );
 };
 
-export default OrderDetails;
+export default OrderConfirmation;

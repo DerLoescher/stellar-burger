@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+
+    gap: 60px;
+}
+
+.columns {
+    display: flex;
+    gap: 36px;
+}
+
+.column {
+    flex: 1 1 0;
+}
+
+.total {
+    width: 100%;
+}

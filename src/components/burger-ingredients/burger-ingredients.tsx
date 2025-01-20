@@ -1,7 +1,6 @@
-import {useEffect, useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useRef, useState} from "react";
+import {useSelector} from "../../services/store.ts";
 import styles from "./burger-ingredients.module.css";
-import {loadIngredients} from "../../services/ingredients/ingredients-actions.js";
 
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientItem from "./ingredient-item/ingredient-item.tsx";
@@ -19,76 +18,71 @@ type IngredientRefs = {
 
 
 const BurgerIngredients = () => {
-    const dispatch = useDispatch();
-    // @ts-ignore
-    const allIngredients = useSelector(store => store.ingredients.allIngredients);
+        const allIngredients = useSelector(store => store.ingredients.allIngredients);
 
-    const [currentTab, setCurrentTab] = useState(ingredientTypes[0].slug);
-
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(loadIngredients());
-    }, []);
+        const [currentTab, setCurrentTab] = useState(ingredientTypes[0].slug);
 
 
-    const ingredientRefs = useRef<IngredientRefs>({});
+        const ingredientRefs = useRef<IngredientRefs>({});
 
-    const handleScroll = () => {
-        const topOffsets = Object.keys(ingredientRefs.current).map(slug => {
-            if (ingredientRefs.current[slug]) {
-                return ingredientRefs.current[slug].getBoundingClientRect().top;
-            }
-            return Infinity;
-        });
+        const handleScroll = () => {
+            const topOffsets = Object.keys(ingredientRefs.current).map(slug => {
+                if (ingredientRefs.current[slug]) {
+                    return ingredientRefs.current[slug].getBoundingClientRect().top;
+                }
+                return Infinity;
+            });
 
-        const closestIndex = topOffsets.findIndex((top) => top === Math.min(...topOffsets.map(Math.abs)));
-        if (closestIndex >= 0) setCurrentTab(ingredientTypes[closestIndex].slug);
-    };
+            const closestIndex = topOffsets.findIndex((top) => top === Math.min(...topOffsets.map(Math.abs)));
+            if (closestIndex >= 0) setCurrentTab(ingredientTypes[closestIndex].slug);
+        };
 
 
-    return (
-        <div className={`${styles.wrapper} pt-10 pb-10`}>
-            <p className="text text_type_main-large mb-5">Соберите бургер</p>
+        return (
+            <div className={`${styles.wrapper} pt-10 pb-10`}>
+                <p className="text text_type_main-large mb-5">Соберите бургер</p>
 
-            <div className={`${styles.tabs} mb-10`}>
-                {ingredientTypes.map((type) => (
-                    <Tab
-                        key={type.slug}
-                        value={type.slug}
-                        active={currentTab === type.slug}
-                        onClick={setCurrentTab}>
-                        {type.name}
-                    </Tab>
-                ))}
+                <div className={`${styles.tabs} mb-10`}>
+                    {ingredientTypes.map((type) => (
+                        <Tab
+                            key={type.slug}
+                            value={type.slug}
+                            active={currentTab === type.slug}
+                            onClick={setCurrentTab}>
+                            {type.name}
+                        </Tab>
+                    ))}
+                </div>
+
+                <div className={styles.scrollable} onScroll={handleScroll}>
+                    {ingredientTypes.map((type) => (
+                            <div className="mb-10" key={type.slug}
+                                 ref={el => {
+                                     if (el) ingredientRefs.current[type.slug] = el
+                                 }}>
+                                <p className="text text_type_main-medium mb-6">{type.name}</p>
+
+                                <ul className={styles["section-list"]}>
+                                    {allIngredients
+                                        .filter((item: TIngredient) => item.type === type.slug)
+                                        .map((item: TIngredient) => {
+                                            return (
+                                                <BurgerIngredientItem
+                                                    key={item._id}
+                                                    {...item}
+                                                />
+                                            );
+                                        })}
+                                </ul>
+                            </div>
+                        )
+                    )
+                    }
+                </div>
             </div>
-
-            <div className={styles.scrollable} onScroll={handleScroll}>
-                {ingredientTypes.map((type) => (
-                    <div className="mb-10" key={type.slug}
-                         ref={el => {if (el) ingredientRefs.current[type.slug] = el}}>
-                    <p className="text text_type_main-medium mb-6">{type.name}</p>
-
-                    <ul className={styles["section-list"]}>
-                {allIngredients
-                    .filter((item: TIngredient) => item.type === type.slug)
-                    .map((item: TIngredient) => {
-                        return (
-                            <BurgerIngredientItem
-                                key={item._id}
-                                {...item}
-                            />
-                        );
-                    })}
-            </ul>
-        </div>
-    )
-)
-}
-</div>
-</div>
-)
-;
-}
+        )
+            ;
+    }
 ;
 
 

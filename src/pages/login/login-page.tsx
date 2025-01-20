@@ -1,30 +1,26 @@
 import {FormEvent, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/store.ts";
 import useForm from "../../hooks/use-form.ts";
 import styles from "./login-page.module.css";
-import {login} from "../../services/user/user-actions.js";
+import {login} from "../../services/user/user-actions.ts";
 
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import PageLayout from "../../components/page-layout/page-layout.tsx";
-
-type TForm = { email?: string, password?: string }
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [form, setForm] = useForm<TForm>({email: '', password: ''});
+    const [form, setForm] = useForm<Omit<TUserForm, 'name'>>({email: '', password: ''});
 
     const [passwordVisible, setPasswordVisible] = useState(false)
 
-    // @ts-ignore
     const error = useSelector(state => state.user.error)
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
-        // @ts-ignore
         await dispatch(login({email: form.email, password: form.password}))
 
         navigate(-1);
@@ -54,7 +50,7 @@ const LoginPage = () => {
                         onIconClick={() => setPasswordVisible(true)}
                     />
 
-                    <Button htmlType="submit" type="primary" size="medium">
+                    <Button htmlType="submit" type="primary" size="medium" disabled={!form.email || !form.password}>
                         Войти
                     </Button>
 

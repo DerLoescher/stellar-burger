@@ -1,30 +1,26 @@
 import {FormEvent, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/store.ts";
 import useForm from "../../hooks/use-form.ts";
 import styles from "./register-page.module.css";
-import {register} from "../../services/user/user-actions.js";
+import {register} from "../../services/user/user-actions.ts";
 
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import PageLayout from "../../components/page-layout/page-layout.tsx";
-
-type TForm = { name?: string, email?: string, password?: string }
 
 const RegisterPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [form, setForm] = useForm<TForm>({name: '', email: '', password: ''});
+    const [form, setForm] = useForm<TUserForm>({name: '', email: '', password: ''});
 
     const [passwordVisible, setPasswordVisible] = useState(false)
 
-    // @ts-ignore
     const error = useSelector(state => state.user.error)
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
-        // @ts-ignore
         dispatch(register({name: form.name, email: form.email, password: form.password}))
 
         navigate('/');

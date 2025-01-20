@@ -2,11 +2,10 @@ import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import {configureStore} from "./services/store.js";
+import {store} from "./services/store.ts";
 import {Provider} from "react-redux";
 import {BrowserRouter as Router} from "react-router-dom";
 
-const store = configureStore();
 const root: HTMLElement | null = document.getElementById('root');
 
 if (root) {

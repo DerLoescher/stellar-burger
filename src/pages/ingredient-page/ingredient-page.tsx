@@ -4,7 +4,7 @@ import IngredientDetails from "../../components/burger-ingredients/ingredient-de
 const IngredientPage = () => {
     return <PageLayout>
         <div className='pt-30'>
-            <IngredientDetails/>
+            <IngredientDetails title='Детали ингредиента'/>
         </div>
     </PageLayout>
 }

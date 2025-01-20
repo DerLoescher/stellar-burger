@@ -2,7 +2,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import styles from "./forgot-password-page.module.css";
 import {fetchWithCheck} from "../../utils/api.ts";
-import {FORGOT_PASS_ENDPOINT} from "../../utils/dictionary.js";
+import {FORGOT_PASS_ENDPOINT} from "../../utils/dictionary.ts";
 
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import PageLayout from "../../components/page-layout/page-layout.tsx";

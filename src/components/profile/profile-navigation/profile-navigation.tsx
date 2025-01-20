@@ -1,13 +1,12 @@
 import {NavLink} from "react-router-dom";
 import styles from "./profile-navigation.module.css"
-import {useDispatch} from "react-redux";
-import {logout} from "../../../services/user/user-actions.js";
+import {useDispatch} from "../../../services/store.ts";
+import {logout} from "../../../services/user/user-actions.ts";
 
 const ProfileNavigation = () => {
     const dispatch = useDispatch();
 
     const logOut = () => {
-        // @ts-ignore
         dispatch(logout());
     }
 
