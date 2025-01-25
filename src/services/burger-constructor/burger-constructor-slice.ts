@@ -6,7 +6,7 @@ interface BurgerConstructorState {
     burgerIngredients: TDraggableIngredient[];
 }
 
-const initialState: BurgerConstructorState = {
+export const initialState: BurgerConstructorState = {
     currentBun: null,
     burgerIngredients: [],
 };

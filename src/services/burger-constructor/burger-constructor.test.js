@@ -1,4 +1,5 @@
 import burgerConstructorSlice, {
+    initialState,
     addIngredient,
     moveConstructorItem,
     removeIngredient,
@@ -17,12 +18,6 @@ const mockIngredient = {
 
 
 describe('burgerConstructorSlice', () => {
-
-    const initialState = {
-        currentBun: null,
-        burgerIngredients: [],
-    };
-
     it('should add bun ingredient', () => {
         const state = burgerConstructorReducer(initialState, addIngredient({type: 'bun'}));
         expect(state.currentBun).toEqual({type: 'bun', uniqueId: expect.any(String)});

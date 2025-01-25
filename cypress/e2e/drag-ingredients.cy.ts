@@ -1,9 +1,10 @@
 import type {} from 'cypress';
 import type {} from '../support/cypress';
+import {TEST_URL} from "../const";
 
 describe('Ingredient Drag and Drop', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:5173/');
+        cy.visit(TEST_URL);
     });
 
     it('should drag and drop ingredient into the constructor', () => {
