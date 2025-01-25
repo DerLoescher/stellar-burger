@@ -33,6 +33,7 @@ const BurgerIngredientItem: FC<IBurgerIngredientItem> = (props) => {
             key={props._id}
             to={`/ingredients/${props._id}`}
             state={{background: location}}
+            data-testId="ingredient-item"
         >
             <div className={styles.ingredient} ref={dragRef}>
                 <img src={props.image} alt={props.name}/>

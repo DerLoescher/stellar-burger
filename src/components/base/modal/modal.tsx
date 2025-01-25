@@ -27,14 +27,14 @@ const Modal: FC<IModal> = (props) => {
     }, [props]);
 
     return createPortal(
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} data-testId="modal">
             <div className={`${styles.container} p-10 pb-15`}>
                 <header className={styles.header}>
                     {props.title && (
                         <p className="text text_type_main-medium">{props.title}</p>
                     )}
 
-                    <button className={styles["close-button"]} onClick={props.onClose}>
+                    <button className={styles["close-button"]} data-testId="close-button" onClick={props.onClose}>
                         <CloseIcon type="primary"/>
                     </button>
                 </header>

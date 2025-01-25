@@ -29,7 +29,7 @@ const BurgerConstructor = () => {
     });
 
     return (
-        <div className={`${styles["constructor-block"]} ${isHover ? styles['drop-target'] : ''}`} ref={dropTarget}>
+        <div className={`${styles["constructor-block"]} ${isHover ? styles['drop-target'] : ''}`} ref={dropTarget} data-testId="burger-constructor">
 
             {currentBun &&
                 <div className='mb-4'>

@@ -8,7 +8,7 @@ interface OrderState {
     error: string | undefined | null;
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
     createdOrderNumber: null,
     order: null,
     status: 'idle',

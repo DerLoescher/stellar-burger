@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-enum WebsocketStatus {
-    CONNECTING = 'CONNECTING...',
+export enum WebsocketStatus {
+    CONNECTING = 'CONNECTING',
     ONLINE = 'ONLINE',
     OFFLINE = 'OFFLINE'
 }
@@ -11,7 +11,7 @@ type FeedStore = TFeedResponse & {
     connectionError: string | null;
 };
 
-const initialState: FeedStore = {
+export const initialState: FeedStore = {
     status: WebsocketStatus.OFFLINE,
     orders: [],
     connectionError: null,

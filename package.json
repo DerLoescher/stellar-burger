@@ -2,20 +2,28 @@
   "name": "react-vite-js",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://derloescher.github.io/stellar-burger",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "jest",
+    "cypress": "npx cypress open",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@babel/runtime": "^7.25.6",
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.3.0",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.2",
     "core-js": "^3.38.1",
     "date-fns": "^4.1.0",
+    "eslint-plugin-cypress": "^4.1.0",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -28,15 +36,25 @@
     "uuid": "^11.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.7",
+    "@babel/preset-env": "^7.26.7",
     "@eslint/js": "^9.9.0",
+    "@jest/globals": "^29.7.0",
+    "@testing-library/react": "^16.2.0",
     "@types/react": "^18.3.14",
     "@types/react-dom": "^18.3.2",
     "@vitejs/plugin-react": "^4.3.1",
+    "babel-jest": "^29.7.0",
+    "cypress": "^14.0.0",
     "eslint": "^9.9.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
+    "fetch-mock": "^12.2.0",
+    "gh-pages": "^6.3.0",
     "globals": "^15.9.0",
+    "jest": "^29.7.0",
+    "redux-mock-store": "^1.5.5",
     "vite": "^5.4.1"
   }
 }
