@@ -6,7 +6,7 @@ interface IModalOverlay {
 }
 
 const ModalOverlay: FC<IModalOverlay> = ({onClick}) => {
-    return <div className={styles.overlay} onClick={onClick}/>;
+    return <div className={styles.overlay} data-testId="modal-overlay" onClick={onClick}/>;
 };
 
 export default ModalOverlay;

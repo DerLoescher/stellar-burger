@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import {store} from "./services/store.ts";
 import {Provider} from "react-redux";
-import {BrowserRouter as Router} from "react-router-dom";
+import {HashRouter as Router} from "react-router-dom";
 
 const root: HTMLElement | null = document.getElementById('root');
 
